@@ -1,4 +1,4 @@
-const dbus = require('../index');
+import dbus from '../index.js';
 
 /*
 	This test file's purpose is to show how to write a simple, basic DBus service with this library.
@@ -36,30 +36,21 @@ if (!sessionBus) {
 	The 0x4 flag means that we don't want to be queued if the service name we are requesting is already
 	owned by another service ;we want to fail instead.
 */
-sessionBus.requestName(serviceName, 0x4, (err, retCode) => {
-  // If there was an error, warn user and fail
-  if (err) {
-    throw new Error(
-      `Could not request service name ${serviceName}, the error was: ${err}.`
-    );
-  }
+const [retCode] = await sessionBus.requestName(serviceName, 0x4);
 
-  // Return code 0x1 means we successfully had the name
-  if (retCode === 1) {
-    console.log(`Successfully requested service name "${serviceName}"!`);
-    proceed();
-  } else {
-    /* Other return codes means various errors, check here
-	(https://dbus.freedesktop.org/doc/api/html/group__DBusShared.html#ga37a9bc7c6eb11d212bf8d5e5ff3b50f9) for more
-	information
-	*/
-    throw new Error(
-      `Failed to request service name "${
-        serviceName
-      }". Check what return code "${retCode}" means.`
-    );
-  }
-});
+// Return code 0x1 means we successfully had the name
+if (retCode === 1) {
+  console.log(`Successfully requested service name "${serviceName}"!`);
+  proceed();
+} else {
+  /* Other return codes means various errors, check here
+(https://dbus.freedesktop.org/doc/api/html/group__DBusShared.html#ga37a9bc7c6eb11d212bf8d5e5ff3b50f9) for more
+information
+*/
+  throw new Error(
+    `Failed to request service name "${serviceName}". Check what return code "${retCode}" means.`
+  );
+}
 
 // Function called when we have successfully got the service name we wanted
 function proceed() {

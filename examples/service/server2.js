@@ -1,4 +1,4 @@
-const dbus = require('../../index');
+import dbus from '../index.js';
 
 // command line to test:
 // dbus-send --print-reply --type=method_call --dest='some.name' '/com/github/sidorares/1' com.example.service.respondWithDouble string:'test123'

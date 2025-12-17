@@ -1,5 +1,5 @@
-const dbus = require('../index');
-const inspect = require('util').inspect;
+import dbus from '../index.js';
+import { inspect } from 'util';
 
 /*
 	This example show how to expose signals on a DBus service, and how to emit them.
@@ -49,9 +49,7 @@ sessionBus.requestName(serviceName, 0x4, (err, retCode) => {
 	information
 	*/
     throw new Error(
-      `Failed to request service name "${
-        serviceName
-      }". Check what return code "${retCode}" means.`
+      `Failed to request service name "${serviceName}". Check what return code "${retCode}" means.`
     );
   }
 });

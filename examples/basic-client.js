@@ -1,4 +1,4 @@
-const dbus = require('../index');
+import dbus from '../index.js';
 
 /*
 	This test file's purpose is to show how to query a simple, basic DBus service with this library.
@@ -28,31 +28,12 @@ if (!sessionBus) {
 
 const service = sessionBus.getService(serviceName);
 
-service.getInterface(objectPath, interfaceName, (err, iface) => {
-  if (err) {
-    console.error(
-      `Failed to request interface '${interfaceName}' at '${objectPath}' : ${err}`
-    );
-    process.exit(1);
-  }
+const iface = await service.getInterface(objectPath, interfaceName);
+const time = await iface.GiveTime();
+console.log(`GiveTime returned: ${time}`);
 
-  iface.GiveTime((err, str) => {
-    if (err) {
-      console.error(`Error while calling GiveTime: ${err}`);
-    } else {
-      console.log(`GiveTime returned: ${str}`);
-    }
+const str = await iface.Capitalize('Hello, World!');
+console.log(`Capitalize returned: ${str}`);
 
-    iface.Capitalize('Hello, World!', (err, str) => {
-      if (err) {
-        console.error(`Error while calling Capitalize: ${err}`);
-      } else {
-        console.log(`Capitalize returned: ${str}`);
-      }
-    });
-  });
-
-  iface.on('Rand', nb => {
-    console.log(`Received Rand: ${nb}`);
-  });
-});
+const nb = await iface.on('Rand');
+console.log(`Received Rand: ${nb}`);

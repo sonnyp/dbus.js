@@ -1,4 +1,4 @@
-const dbus = require('../../index');
+import dbus from '../../index.js';
 
 dbus
   .createServer(function(conn) {

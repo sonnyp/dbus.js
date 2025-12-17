@@ -1,4 +1,4 @@
-const dbus = require('../index');
+import dbus from '../index.js';
 
 //var conn = dbus.createConnection({socket: '/var/run/dbus/system_bus_socket'});
 var conn = dbus.createConnection();

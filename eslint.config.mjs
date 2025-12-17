@@ -47,8 +47,9 @@ export default defineConfig([
   },
   {
     languageOptions: {
+      ecmaVersion: 2025,
       sourceType: 'module'
     },
-    files: ['examples/**.js']
+    files: ['examples/**/*.js']
   }
 ]);

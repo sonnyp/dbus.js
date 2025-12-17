@@ -92,7 +92,12 @@ function createConnection(opts) {
     return self;
   };
 
-  var handshake = opts.server ? serverHandshake : clientHandshake;
+  var handshake;
+  if (opts.handshake === 'none') {
+    handshake = () => {};
+  } else {
+    handshake = opts.server ? serverHandshake : clientHandshake;
+  }
   handshake(stream, opts, function(error, guid) {
     if (error) {
       return self.emit('error', error);
