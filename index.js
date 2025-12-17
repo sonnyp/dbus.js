@@ -93,7 +93,12 @@ export function createConnection(opts) {
     return self;
   };
 
-  var handshake = opts.server ? serverHandshake : clientHandshake;
+  var handshake;
+  if (opts.handshake === "none") {
+    handshake = () => {};
+  } else {
+    handshake = opts.server ? serverHandshake : clientHandshake;
+  }
   handshake(stream, opts, function (error, guid) {
     if (error) {
       return self.emit("error", error);
@@ -138,7 +143,7 @@ export function createClient(params) {
 }
 
 export function systemBus() {
-  return module.exports.createClient({
+  return createClient({
     busAddress:
       process.env.DBUS_SYSTEM_BUS_ADDRESS ||
       "unix:path=/var/run/dbus/system_bus_socket",
@@ -146,7 +151,7 @@ export function systemBus() {
 }
 
 export function sessionBus(opts) {
-  return module.exports.createClient(opts);
+  return createClient(opts);
 }
 
 const { messageType } = constants;
@@ -154,3 +159,12 @@ export { messageType };
 
 const { createServer } = server;
 export { createServer };
+
+export default {
+  sessionBus,
+  systemBus,
+  createServer,
+  createClient,
+  createConnection,
+  messageType,
+};
