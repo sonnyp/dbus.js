@@ -143,7 +143,7 @@ export function createClient(params) {
 }
 
 export function systemBus() {
-  return module.exports.createClient({
+  return createClient({
     busAddress:
       process.env.DBUS_SYSTEM_BUS_ADDRESS ||
       "unix:path=/var/run/dbus/system_bus_socket",
@@ -151,7 +151,7 @@ export function systemBus() {
 }
 
 export function sessionBus(opts) {
-  return module.exports.createClient(opts);
+  return createClient(opts);
 }
 
 const { messageType } = constants;
@@ -159,3 +159,12 @@ export { messageType };
 
 const { createServer } = server;
 export { createServer };
+
+export default {
+  sessionBus,
+  systemBus,
+  createServer,
+  createClient,
+  createConnection,
+  messageType,
+};
