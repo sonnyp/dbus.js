@@ -1,11 +1,11 @@
-const dbus = require('../index');
+const dbus = require("../index");
 
 var bus = dbus.sessionBus();
 // TODO: put all matches to one string here
 bus.invoke({
-  member: 'AddMatch',
-  signature: 's',
-  body: ["type='signal',"]
+  member: "AddMatch",
+  signature: "s",
+  body: ["type='signal',"],
 });
 
 /*

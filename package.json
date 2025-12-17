@@ -47,14 +47,14 @@
     "xml2js": "^0.4.17"
   },
   "devDependencies": {
-    "eslint": "^5.0.0",
-    "eslint-config-prettier": "^3.0.0",
-    "eslint-plugin-markdown": "^1.0.0-beta.6",
-    "eslint-plugin-prettier": "^3.0.0",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-markdown": "^5.1.0",
+    "eslint-plugin-prettier": "^5.5.4",
     "husky": "^1.0.0",
     "lint-staged": "^8.0.0",
     "mocha": "*",
-    "prettier": "^1.7.4"
+    "prettier": "^3.7.4"
   },
   "scripts": {
     "lint": "npm run lint:docs && npm run lint:code",
@@ -73,11 +73,6 @@
       "prettier --write",
       "git add"
     ]
-  },
-  "prettier": {
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "none"
   },
   "engine": {
     "node": ">=20.8"

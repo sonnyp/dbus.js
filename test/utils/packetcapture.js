@@ -1,8 +1,8 @@
-const Buffer = require('safe-buffer').Buffer;
-const net = require('net');
-const hexy = require('hexy').hexy;
-const buffs = require('buffers');
-const fs = require('fs');
+const Buffer = require("safe-buffer").Buffer;
+const net = require("net");
+const hexy = require("hexy").hexy;
+const buffs = require("buffers");
+const fs = require("fs");
 
 function nextPacketPos(b) {
   if (b.length < 10) return -1;
@@ -18,47 +18,47 @@ function nextPacketPos(b) {
   return -1;
 }
 
-var packetfile = fs.createWriteStream('./packets.bin');
+var packetfile = fs.createWriteStream("./packets.bin");
 
 net
-  .createServer(function(s) {
-    var buff = '';
+  .createServer(function (s) {
+    var buff = "";
     var b = buffs();
     var connected = false;
-    var cli = net.createConnection('\0/tmp/dbus-WDSwP4V64O');
-    s.on('data', function(d) {
+    var cli = net.createConnection("\0/tmp/dbus-WDSwP4V64O");
+    s.on("data", function (d) {
       if (connected) {
         cli.write(d);
       } else {
         buff += d.toString();
       }
     });
-    s.on('end', function() {
+    s.on("end", function () {
       packetfile.end(b.toBuffer());
     });
-    cli.on('end', function() {
+    cli.on("end", function () {
       packetfile.end(b.toBuffer());
     });
-    cli.on('data', function(d) {
-      console.error(hexy(d, { prefix: 'from bus   ' }));
+    cli.on("data", function (d) {
+      console.error(hexy(d, { prefix: "from bus   " }));
       b.push(d);
       function extractPacket() {
         var pos = nextPacketPos(b);
-        console.log('NEXT PACKET POS:', pos);
+        console.log("NEXT PACKET POS:", pos);
         if (pos !== -1) {
           var packet = b.splice(0, pos).toBuffer();
           console.error(
-            ' ====== PACKET START ====== ',
+            " ====== PACKET START ====== ",
             pos,
             packet.length,
-            packet[0]
+            packet[0],
           );
-          console.error(hexy(packet, { prefix: 'packet: ' }));
-          console.error(' ====== PACKET END ====== ');
+          console.error(hexy(packet, { prefix: "packet: " }));
+          console.error(" ====== PACKET END ====== ");
           if (packet[0] === 0x6c) {
             var len = Buffer.alloc(4);
             len.writeUInt32LE(packet.length, 0);
-            console.error(hexy(len, { prefix: 'packet header: ' }));
+            console.error(hexy(len, { prefix: "packet header: " }));
             packetfile.write(len);
             packetfile.write(packet);
           }
@@ -67,12 +67,9 @@ net
       }
       extractPacket();
     });
-    console.log('connected to 3000');
+    console.log("connected to 3000");
     connected = true;
     cli.write(buff);
-    cli.pipe(
-      s,
-      { end: false }
-    );
+    cli.pipe(s, { end: false });
   })
-  .listen(7000, '0.0.0.0');
+  .listen(7000, "0.0.0.0");
