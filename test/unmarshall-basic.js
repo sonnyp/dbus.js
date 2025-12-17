@@ -33,7 +33,7 @@ function test(signature, data, other_result, unmarshall_opts) {
     } else {
       assert.deepStrictEqual(data, result);
     }
-  } catch (e) {
+  } catch {
     console.log('signature   :', signature);
     console.log('orig        :', data);
     console.log('unmarshalled:', result);

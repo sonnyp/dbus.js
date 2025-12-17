@@ -7,7 +7,7 @@ function test(signature, data) {
   var result = unmarshall(marshalledBuffer, signature);
   try {
     assert.deepStrictEqual(data, result);
-  } catch (e) {
+  } catch {
     console.log('signature   :', signature);
     console.log('orig        :', data);
     console.log('unmarshalled:', result);

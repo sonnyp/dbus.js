@@ -1,5 +1,5 @@
 const introspect = require('../lib/introspect');
-const fs = require('fs');
+const fs = require('fs/promises');
 const path = require('path');
 
 // Introspection test cases
@@ -15,32 +15,15 @@ describe('given introspect xml', function() {
 });
 
 const dummyObj = {};
-function testXml(fname) {
+async function testXml(fname) {
   var fpath = path.join(__dirname, 'fixtures', 'introspection', fname);
-  return new Promise((resolve, reject) => {
-    // get expected data from json file
-    fs.readFile(fpath + '.json', 'utf8', function(err, data) {
-      if (err) reject(err);
-      var test_obj = JSON.parse(data);
-      // get introspect xml from xml file
-      fs.readFile(fpath + '.xml', function(err, xml_data) {
-        if (err) reject(err);
-        else {
-          introspect.processXML(err, xml_data, dummyObj, function(
-            err,
-            proxy,
-            nodes
-          ) {
-            if (err) reject(err);
-            else {
-              checkIntrospection(test_obj, proxy, nodes);
-              resolve();
-            }
-          });
-        }
-      });
-    });
-  });
+  // get expected data from json file
+  const data = await fs.readFile(fpath + '.json', 'utf8');
+  var test_obj = JSON.parse(data);
+  // get introspect xml from xml file
+  const xml_data = await fs.readFile(fpath + '.xml');
+  const [proxy, nodes] = await introspect.processXML(xml_data, dummyObj);
+  checkIntrospection(test_obj, proxy, nodes);
 }
 
 /*eslint no-unused-vars: ["error", { "argsIgnorePattern": "^_" }]*/
