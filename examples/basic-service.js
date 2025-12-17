@@ -1,4 +1,4 @@
-import dbus from '../index.js';
+import dbus from "../index.js";
 
 /*
 	This test file's purpose is to show how to write a simple, basic DBus service with this library.
@@ -10,7 +10,7 @@ import dbus from '../index.js';
 	- make a method call: `gdbus introspect -e -d com.dbus.native.return.types -o /com/dbus/native/return/types -m com.dbus.native.return.types.FunctionName`
 */
 
-const serviceName = 'com.dbus.native.basic.service'; // our DBus service name
+const serviceName = "com.dbus.native.basic.service"; // our DBus service name
 /*
 	The interface under which we will expose our functions (chose to be the same as the service name, but we can
 	choose whatever name we want, provided it respects the rules, see DBus naming documentation)
@@ -21,14 +21,14 @@ const interfaceName = serviceName;
 	interface) name, with the dots replaced by slashes (because objects path must be on the form of UNIX paths)
 	But again, we could chose anything. This is just a demo here.
 */
-const objectPath = `/${serviceName.replace(/\./g, '/')}`;
+const objectPath = `/${serviceName.replace(/\./g, "/")}`;
 
 // First, connect to the session bus (works the same on the system bus, it's just less permissive)
 const sessionBus = dbus.sessionBus();
 
 // Check the connection was successful
 if (!sessionBus) {
-  throw new Error('Could not connect to the DBus session bus.');
+  throw new Error("Could not connect to the DBus session bus.");
 }
 
 /*
@@ -48,7 +48,7 @@ if (retCode === 1) {
 information
 */
   throw new Error(
-    `Failed to request service name "${serviceName}". Check what return code "${retCode}" means.`
+    `Failed to request service name "${serviceName}". Check what return code "${retCode}" means.`,
   );
 }
 
@@ -59,47 +59,47 @@ function proceed() {
     name: interfaceName,
     methods: {
       // Simple types
-      SayHello: ['', 's', [], ['hello_sentence']],
-      GiveTime: ['', 's', [], ['current_time']],
-      Capitalize: ['s', 's', ['initial_string'], ['capitalized_string']]
+      SayHello: ["", "s", [], ["hello_sentence"]],
+      GiveTime: ["", "s", [], ["current_time"]],
+      Capitalize: ["s", "s", ["initial_string"], ["capitalized_string"]],
     },
     properties: {
-      Flag: 'b',
-      StringProp: 's'
+      Flag: "b",
+      StringProp: "s",
     },
     signals: {
-      Rand: ['i', 'random_number']
-    }
+      Rand: ["i", "random_number"],
+    },
   };
 
   // Then we need to create the interface implementation (with actual functions)
   var iface = {
-    SayHello: function() {
-      return 'Hello, world!';
+    SayHello: function () {
+      return "Hello, world!";
     },
-    GiveTime: function() {
+    GiveTime: function () {
       return new Date().toString();
     },
-    Capitalize: function(str) {
+    Capitalize: function (str) {
       return str.toUpperCase();
     },
     Flag: true,
-    StringProp: 'initial string',
-    emit: function() {
+    StringProp: "initial string",
+    emit: function () {
       // no nothing, as usual
-    }
+    },
   };
 
   // Now we need to actually export our interface on our object
   sessionBus.exportInterface(iface, objectPath, ifaceDesc);
 
   // Say our service is ready to receive function calls (you can use `gdbus call` to make function calls)
-  console.log('Interface exposed to DBus, ready to receive function calls!');
+  console.log("Interface exposed to DBus, ready to receive function calls!");
 
   setInterval(() => {
     var rand = Math.round(Math.random() * 100);
     if (rand > 75) {
-      iface.emit('Rand', Math.round(Math.random() * 100));
+      iface.emit("Rand", Math.round(Math.random() * 100));
     }
   }, 2000);
 }

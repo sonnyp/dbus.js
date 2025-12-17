@@ -77,11 +77,6 @@
       "git add"
     ]
   },
-  "prettier": {
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "none"
-  },
   "engine": {
     "node": ">=20.8"
   }

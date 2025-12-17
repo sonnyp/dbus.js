@@ -1,8 +1,8 @@
-import dbus from '../../index.js';
+import dbus from "../../index.js";
 
 dbus
-  .createServer(function(conn) {
-    conn.on('message', function(msg) {
+  .createServer(function (conn) {
+    conn.on("message", function (msg) {
       if (msg.serial) {
         msg.serial += 1;
       } else {
@@ -10,6 +10,6 @@ dbus
       }
       conn.message(msg);
     });
-    conn.message({ interface: 'yes' });
+    conn.message({ interface: "yes" });
   })
   .listen(3333);
