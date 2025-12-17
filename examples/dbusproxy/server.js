@@ -1,7 +1,9 @@
-const http = require("http");
-const sockjs = require("sockjs");
-const node_static = require("node-static");
-const dbus = require("../../index");
+import http from "http";
+
+import sockjs from "sockjs";
+import node_static from "node-static";
+
+import dbus from "../../index.js";
 
 // 1. Echo sockjs server
 var sockjs_opts = {

@@ -1,4 +1,4 @@
-const dbus = require("../index");
+import dbus from "../index.js";
 
 var bus = dbus.sessionBus();
 // TODO: put all matches to one string here

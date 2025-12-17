@@ -11,7 +11,7 @@ const __dirname = path.dirname(__filename);
 const compat = new FlatCompat({
   baseDirectory: __dirname,
   recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all
+  allConfig: js.configs.all,
 });
 
 export default defineConfig([
@@ -19,30 +19,31 @@ export default defineConfig([
     extends: compat.extends("eslint:recommended", "prettier"),
 
     plugins: {
-      markdown
+      markdown,
     },
 
     languageOptions: {
       globals: {
         ...globals.node,
-        ...globals.mocha
+        ...globals.mocha,
+        require: "off",
       },
 
       ecmaVersion: 2025,
-      sourceType: "commonjs"
+      sourceType: "module",
     },
 
     rules: {
       "no-constant-condition": [
         "error",
         {
-          checkLoops: false
-        }
+          checkLoops: false,
+        },
       ],
 
       eqeqeq: ["error", "always"],
       "no-console": "off",
-      "no-empty": "off"
-    }
-  }
+      "no-empty": "off",
+    },
+  },
 ]);

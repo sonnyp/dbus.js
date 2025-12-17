@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   // signature, data, not expected to fail?, data after unmarshall (when expected to convert to canonic form and different from input)
   "simple types": [
     ["s", ["short string"]],

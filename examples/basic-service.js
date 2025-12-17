@@ -1,4 +1,4 @@
-const dbus = require("../index");
+import dbus from "../index.js";
 
 /*
 	This test file's purpose is to show how to write a simple, basic DBus service with this library.
@@ -54,9 +54,7 @@ sessionBus.requestName(serviceName, 0x4, (err, retCode) => {
 	information
 	*/
     throw new Error(
-      `Failed to request service name "${
-        serviceName
-      }". Check what return code "${retCode}" means.`,
+      `Failed to request service name "${serviceName}". Check what return code "${retCode}" means.`,
     );
   }
 });

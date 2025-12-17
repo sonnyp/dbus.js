@@ -1,5 +1,5 @@
-const net = require("net");
-const hexy = require("hexy").hexy;
+import net from "net";
+import { hexy } from "hexy";
 
 net
   .createServer(function (s) {

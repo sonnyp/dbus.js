@@ -1,6 +1,7 @@
-const introspect = require("../lib/introspect");
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
+
+import { processXML } from "../lib/introspect.js";
 
 // Introspection test cases
 var testCases = [{ desc: "Basic Example", file: "example" }];
@@ -16,7 +17,12 @@ describe("given introspect xml", function () {
 
 const dummyObj = {};
 function testXml(fname) {
-  var fpath = path.join(__dirname, "fixtures", "introspection", fname);
+  var fpath = path.join(
+    import.meta.dirname,
+    "fixtures",
+    "introspection",
+    fname,
+  );
   return new Promise((resolve, reject) => {
     // get expected data from json file
     fs.readFile(fpath + ".json", "utf8", function (err, data) {
@@ -26,18 +32,13 @@ function testXml(fname) {
       fs.readFile(fpath + ".xml", function (err, xml_data) {
         if (err) reject(err);
         else {
-          introspect.processXML(
-            err,
-            xml_data,
-            dummyObj,
-            function (err, proxy, nodes) {
-              if (err) reject(err);
-              else {
-                checkIntrospection(test_obj, proxy, nodes);
-                resolve();
-              }
-            },
-          );
+          processXML(err, xml_data, dummyObj, function (err, proxy, nodes) {
+            if (err) reject(err);
+            else {
+              checkIntrospection(test_obj, proxy, nodes);
+              resolve();
+            }
+          });
         }
       });
     });

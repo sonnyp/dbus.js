@@ -1,12 +1,15 @@
 #!/usr/bin/env node
 
-const fs = require("fs");
-const xml2js = require("xml2js");
+import fs from "fs";
+
+import xml2js from "xml2js";
+import optimist from "optimist";
+
+import dbus from "../index.js";
+
 const xml2js_opts = Object.assign({}, xml2js.defaults["0.1"], {
   explicitArray: true,
 });
-const dbus = require("../index");
-const optimist = require("optimist");
 
 var argv = optimist.boolean(["server", "dump"]).argv;
 

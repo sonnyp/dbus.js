@@ -1,4 +1,4 @@
-const dbus = require("../index");
+import dbus from "../index.js";
 
 /*
 	This example shows how to query a DBus service and listen for its signals.

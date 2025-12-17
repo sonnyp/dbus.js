@@ -1,8 +1,8 @@
-const Buffer = require("safe-buffer").Buffer;
-const net = require("net");
-const hexy = require("hexy").hexy;
-const buffs = require("buffers");
-const fs = require("fs");
+import net from "net";
+import fs from "fs";
+
+import { hexy } from "hexy";
+import buffs from "buffers";
 
 function nextPacketPos(b) {
   if (b.length < 10) return -1;

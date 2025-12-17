@@ -1,11 +1,13 @@
 // simple script to monitor incoming/outcoming dbus messages
 // needs a lot of cleanup but does the job
 
-const net = require("net");
-const through2 = require("through2");
-const optimist = require("optimist");
-const message = require("../lib/message");
-const readLine = require("../lib/readline");
+import net from "net";
+
+import through2 from "through2";
+import optimist from "optimist";
+
+import message from "../lib/message.js";
+import readLine from "../lib/readline.js";
 
 var sessionBusAddress = process.env.DBUS_SESSION_BUS_ADDRESS;
 var m = sessionBusAddress.match(/abstract=([^,]+)/);
