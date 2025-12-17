@@ -1,4 +1,4 @@
-import dbus from "../index.js";
+import dbus from "../../index.js";
 
 var bus = dbus.sessionBus();
 

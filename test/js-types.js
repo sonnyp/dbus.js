@@ -1,6 +1,7 @@
-const marshall = require("../lib/marshall");
-const unmarshall = require("../lib/unmarshall");
-const assert = require("assert");
+import assert from "assert";
+
+import marshall from "../lib/marshall.js";
+import unmarshall from "../lib/unmarshall.js";
 
 function test(signature, data) {
   var marshalledBuffer = marshall(signature, data);

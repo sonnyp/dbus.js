@@ -1,14 +1,17 @@
 // dbus.freedesktop.org/doc/dbus-specification.html
 
-const EventEmitter = require("events").EventEmitter;
-const net = require("net");
+import { EventEmitter } from "events";
+import net from "net";
+import { spawn } from "child_process";
 
-const constants = require("./lib/constants");
-const message = require("./lib/message");
-const clientHandshake = require("./lib/handshake");
-const serverHandshake = require("./lib/server-handshake");
-const MessageBus = require("./lib/bus");
-const server = require("./lib/server");
+import eventStream from "event-stream";
+
+import constants from "./lib/constants.js";
+import message from "./lib/message.js";
+import clientHandshake from "./lib/handshake.js";
+import serverHandshake from "./lib/server-handshake.js";
+import MessageBus from "./lib/bus.js";
+import server from "./lib/server.js";
 
 function createStream(opts) {
   if (opts.stream) return opts.stream;
@@ -48,8 +51,6 @@ function createStream(opts) {
             "not enough parameters for 'unix' connection - you need to specify 'socket' or 'abstract' or 'path' parameter",
           );
         case "unixexec":
-          var eventStream = require("event-stream");
-          var spawn = require("child_process").spawn;
           var args = [];
           for (var n = 1; params["arg" + n]; n++) args.push(params["arg" + n]);
           var child = spawn(params.path, args);
@@ -69,7 +70,7 @@ function createStream(opts) {
   }
 }
 
-function createConnection(opts) {
+export function createConnection(opts) {
   var self = new EventEmitter();
   if (!opts) opts = {};
   var stream = (self.stream = createStream(opts));
@@ -136,24 +137,25 @@ function createConnection(opts) {
   return self;
 }
 
-module.exports.createClient = function (params) {
+export function createClient(params) {
   var connection = createConnection(params || {});
   return new MessageBus(connection, params || {});
-};
+}
 
-module.exports.systemBus = function () {
+export function systemBus() {
   return module.exports.createClient({
     busAddress:
       process.env.DBUS_SYSTEM_BUS_ADDRESS ||
       "unix:path=/var/run/dbus/system_bus_socket",
   });
-};
+}
 
-module.exports.sessionBus = function (opts) {
+export function sessionBus(opts) {
   return module.exports.createClient(opts);
-};
+}
 
-module.exports.messageType = constants.messageType;
-module.exports.createConnection = createConnection;
+const { messageType } = constants;
+export { messageType };
 
-module.exports.createServer = server.createServer;
+const { createServer } = server;
+export { createServer };

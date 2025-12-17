@@ -43,21 +43,17 @@
     "long": "^5.3.2",
     "optimist": "^0.6.1",
     "put": "0.0.6",
-    "safe-buffer": "^5.1.1",
     "xml2js": "^0.6.2"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.3",
-    "@eslint/js": "^9.39.2",
     "eslint": "^9.39.2",
-    "eslint-config-prettier": "^3.0.0",
-    "eslint-plugin-markdown": "^1.0.0-beta.6",
-    "eslint-plugin-prettier": "^3.0.0",
-    "globals": "^16.5.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-markdown": "^5.1.0",
+    "eslint-plugin-prettier": "^5.5.4",
     "husky": "^1.0.0",
     "lint-staged": "^8.0.0",
     "mocha": "*",
-    "prettier": "^1.7.4"
+    "prettier": "^3.7.4"
   },
   "scripts": {
     "lint": "npm run lint:docs && npm run lint:code",

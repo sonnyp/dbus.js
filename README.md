@@ -61,7 +61,6 @@ options:
    - authMethods - array of authentication methods, which are attempted in the order provided (default:['EXTERNAL', 'DBUS_COOKIE_SHA1', 'ANONYMOUS'])
    - ayBuffer - boolean (default:true): if true 'ay' dbus fields are returned as buffers
    - ReturnLongjs - boolean (default:false): if true 64 bit dbus fields (x/t) are read out as Long.js objects, otherwise they are converted to numbers (which should be good up to 53 bits)
-   - ( TODO: add/document option to use adress from X11 session )
 
 connection has only one method, `message(msg)`
 
