@@ -43,7 +43,6 @@
     "long": "^5.3.2",
     "optimist": "^0.6.1",
     "put": "0.0.6",
-    "safe-buffer": "^5.1.1",
     "xml2js": "^0.4.17"
   },
   "devDependencies": {
